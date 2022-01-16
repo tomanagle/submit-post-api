@@ -20,7 +20,7 @@ const start = async () => {
   try {
     await f.listen(PORT, HOST);
     await connectToDb();
-    log.info(`Server started at http://localhost:${PORT}`);
+    log.info(`Server started at http://${HOST}:${PORT}`);
   } catch (err) {
     log.info(err);
     process.exit(1);
