@@ -17,7 +17,7 @@ routes(f);
 // Run the server!
 const start = async () => {
   try {
-    await f.listen(PORT);
+    await f.listen(PORT, "0.0.0.0");
     await connectToDb();
     log.info(`Server started at http://localhost:${PORT}`);
   } catch (err) {

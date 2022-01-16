@@ -5,7 +5,6 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - SITE_ADDRESS=${SITE_ADDRESS}
     build:
         context: ./ 
 
