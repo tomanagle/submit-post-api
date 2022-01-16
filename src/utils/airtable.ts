@@ -1,0 +1,44 @@
+import config from "config";
+import Airtable from "airtable";
+import log from "./logger";
+
+const base = new Airtable({
+  apiKey: config.get<string>("airTableApiKey"),
+}).base(config.get<string>("airTableBase"));
+
+export async function createAirtableRecord({
+  name,
+  image,
+  caption,
+  ...rest
+}: {
+  name: string;
+  image: string;
+  caption: string;
+  instagramHandle: string;
+  twitterHandle: string;
+  location?: string;
+}) {
+  base("IG Posts Table").create(
+    [
+      {
+        fields: {
+          Name: name,
+          Image: image,
+          Caption: caption,
+          ...rest,
+        },
+      },
+    ],
+    function (err: any, result: any) {
+      if (err) {
+        log.error(err, "Error posting to Airtable");
+        return;
+      }
+
+      for (let i = 0; i < result.length; i++) {
+        log.info(`Created post ${result[i].getId()}`);
+      }
+    }
+  );
+}
