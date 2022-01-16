@@ -16,4 +16,6 @@ WORKDIR /src
 
 RUN yarn build
 
+RUN mkdir tmp
+
 CMD ["node", "build/src/app.js"]
