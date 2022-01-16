@@ -7,6 +7,7 @@ import routes from "./routes";
 import registerSchema from "./utils/schema";
 
 const PORT = config.get<number>("port");
+const HOST = config.get<string>("host");
 
 const f: FastifyInstance = Fastify({});
 
@@ -17,7 +18,7 @@ routes(f);
 // Run the server!
 const start = async () => {
   try {
-    await f.listen(PORT, "0.0.0.0");
+    await f.listen(PORT, HOST);
     await connectToDb();
     log.info(`Server started at http://localhost:${PORT}`);
   } catch (err) {
