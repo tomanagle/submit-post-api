@@ -14,10 +14,10 @@ export class Post {
   @prop()
   public image: string;
 
-  @prop({ unique: true })
+  @prop({ type: String, trim: true, unique: true, sparse: true })
   public instagramHandle: string;
 
-  @prop({ unique: true })
+  @prop({ type: String, trim: true, unique: true, sparse: true })
   public twitterHandle: string;
 
   @prop()
