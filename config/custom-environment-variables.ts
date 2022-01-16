@@ -1,4 +1,5 @@
 export default {
+  dbUri: "DB_URI",
   accessTokenPublicKey: "ACCESS_TOKEN_PUBLIC_KEY",
   accessTokenPrivateKey: "ACCESS_TOKEN_PRIVATE_KEY",
   airTableApiKey: "AIRTABLE_API_KEY",
