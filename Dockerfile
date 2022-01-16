@@ -1,11 +1,5 @@
 FROM node:16-alpine
 
-ENV SITE_ADDRESS "$SITE_ADDRESS"
-
-RUN echo $SITE_ADDRESS
-
-RUN export SITE_ADDRESS=$SITE_ADDRESS
-
 ADD package.json /tmp/package.json
 
 ADD yarn.lock /tmp/yarn.lock
