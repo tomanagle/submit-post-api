@@ -28,9 +28,11 @@ export async function createPostHandler(
 
   const image = await uploadImage(imageBase64);
 
-  await post.updateOne({
-    image,
-  });
+  if (image) {
+    await post.updateOne({
+      image,
+    });
+  }
 
   await post.save();
 }

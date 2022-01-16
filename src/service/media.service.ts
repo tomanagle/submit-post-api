@@ -25,14 +25,23 @@ function clearFolder(dir: string) {
   });
 }
 
+function randomIntFromInterval(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 export async function uploadImage(file: any) {
   const mediaId = nanoid();
 
   const dir = `${process.cwd()}/tmp/`;
 
-  const bitmap = Buffer.from(String(file), "base64");
+  const cleanData = file
+    .replace(/^data:image\/png;base64,/, "")
+    .replace(/^data:image\/jpeg;base64,/, "")
+    .replace(/^data:image\/jpg;base64,/, "");
 
-  const filePath = path.join(`${dir}${mediaId}.png`);
+  const bitmap = Buffer.from(String(cleanData), "base64");
+
+  const filePath = path.join(`${dir}${mediaId}.jpg`);
 
   try {
     await fs.writeFileSync(filePath, bitmap);
@@ -52,7 +61,7 @@ export async function uploadImage(file: any) {
     (err, res) => {
       if (err) {
         log.error(err, "Error uploading file");
-        throw err;
+        return false;
       }
 
       return res;
@@ -63,9 +72,12 @@ export async function uploadImage(file: any) {
 
   const url = `https://res.cloudinary.com/${config.get(
     "cloudinary.name"
-  )}/image/upload/c_scale,w_500,h_500/c_scale,g_south_west,l_img_overlay,w_200,x_0,y_0/v${
-    result.version
-  }/v-posts/${result.original_filename}.jpg`;
+  )}/image/upload/c_scale,w_500,h_500/c_scale,g_south_west,l_frame_${randomIntFromInterval(
+    1,
+    25
+  )},w_500,x_0,y_0/v${result.version}/posts/${base}/${
+    result.original_filename
+  }.jpeg`;
 
   return url;
 }
