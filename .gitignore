@@ -4,3 +4,4 @@ node_modules
 p.pub
 /build
 deploy.sh
+Caddyfile
