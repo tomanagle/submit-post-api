@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify";
 import {
   approvePostHandler,
   createPostHandler,
+  getPostsHandler,
   processQue,
   rejectPostHandler,
 } from "./controller/post.controller";
@@ -22,6 +23,10 @@ function routes(f: FastifyInstance) {
     schema: {
       body: { $ref: "createPostSchema#" },
     },
+  });
+
+  f.get("/api/posts", {
+    handler: getPostsHandler,
   });
 
   f.post("/api/posts/:postId/approve", {

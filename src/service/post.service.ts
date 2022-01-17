@@ -8,6 +8,10 @@ export async function createPost(input: Post) {
   return post;
 }
 
+export async function findPendingPosts() {
+  return PostModel.find({ status: status.pending }).limit(20);
+}
+
 export async function updatePostStatus(postId: string, status: status) {
   const post = await PostModel.findByIdAndUpdate(
     postId,

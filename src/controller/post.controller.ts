@@ -5,6 +5,7 @@ import { uploadImage } from "../service/media.service";
 import {
   createPost,
   findOneAndUpdatePost,
+  findPendingPosts,
   updatePostStatus,
 } from "../service/post.service";
 import { createAirtableRecord } from "../utils/airtable";
@@ -36,6 +37,15 @@ export async function createPostHandler(
   }
 
   await post.save();
+}
+
+export async function getPostsHandler(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
+  const posts = await findPendingPosts();
+
+  return posts;
 }
 
 export async function approvePostHandler(
