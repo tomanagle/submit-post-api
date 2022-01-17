@@ -76,12 +76,9 @@ export async function rejectPostHandler(
 }
 
 export async function processQue() {
-  const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
-
   const post = await findOneAndUpdatePost(
     {
       status: status.pending,
-      createdAt: { $lt: fiveMinutesAgo },
     },
     {
       status: status.ready,
