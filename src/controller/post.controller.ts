@@ -89,7 +89,7 @@ export async function rejectPostHandler(
 export async function processQue() {
   const post = await findOneAndUpdatePost(
     {
-      status: status.pending,
+      status: status.approved,
     },
     {
       status: status.ready,
