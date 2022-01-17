@@ -74,7 +74,7 @@ export async function uploadImage(file: any) {
 
   const url = `https://res.cloudinary.com/${config.get(
     "cloudinary.name"
-  )}/image/upload/c_scale,w_500,h_500/c_scale,g_south_west,l_frames:${frame},w_500,x_0,y_0/v${
+  )}/image/upload/c_scale,w_2500,h_2500/c_scale,g_south_west,l_frames:${frame},w_2500,x_0,y_0/v${
     result.version
   }/posts/${base}/${result.original_filename}.jpeg`;
 
