@@ -8,6 +8,7 @@ import {
   updatePostStatus,
 } from "../service/post.service";
 import { createAirtableRecord } from "../utils/airtable";
+import log from "../utils/logger";
 
 export async function createPostHandler(
   req: FastifyRequest,
@@ -93,6 +94,7 @@ export async function processQue() {
   );
 
   if (post) {
+    log.info(post, "Submitting post");
     createAirtableRecord(post);
   }
 }
