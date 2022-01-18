@@ -61,6 +61,7 @@ export async function uploadImage(file: any) {
     (err, res) => {
       if (err) {
         log.error(err, "Error uploading file");
+        clearFolder(dir);
         return false;
       }
 
@@ -72,11 +73,11 @@ export async function uploadImage(file: any) {
 
   const frame = `frame_${randomIntFromInterval(1, 25)}`;
 
-  const url = `https://res.cloudinary.com/${config.get(
+  const image = `https://res.cloudinary.com/${config.get(
     "cloudinary.name"
-  )}/image/upload/c_scale,w_2500,h_2500/c_scale,g_south_west,l_frames:${frame},w_2500,x_0,y_0/v${
+  )}/image/upload/c_thumb,w_1500,h_1500/c_scale,g_south_west,l_frames:${frame},w_1500,x_0,y_0/v${
     result.version
   }/posts/${base}/${result.original_filename}.jpeg`;
 
-  return url;
+  return { media: result, image };
 }

@@ -1,4 +1,9 @@
-import { prop, getModelForClass } from "@typegoose/typegoose";
+import {
+  prop,
+  getModelForClass,
+  modelOptions,
+  Severity,
+} from "@typegoose/typegoose";
 
 export enum status {
   rejected = "rejected",
@@ -7,12 +12,20 @@ export enum status {
   ready = "ready",
 }
 
+@modelOptions({
+  options: {
+    allowMixed: Severity.ALLOW,
+  },
+})
 export class Post {
   @prop({ required: true })
   public name: string;
 
   @prop()
   public image: string;
+
+  @prop()
+  public media: any;
 
   @prop({ type: String, trim: true, unique: true, sparse: true })
   public instagramHandle: string;
