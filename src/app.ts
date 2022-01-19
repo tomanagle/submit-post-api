@@ -9,7 +9,9 @@ import registerSchema from "./utils/schema";
 const PORT = config.get<number>("port");
 const HOST = config.get<string>("host");
 
-const f: FastifyInstance = Fastify({});
+const f: FastifyInstance = Fastify({
+  bodyLimit: 12582912,
+});
 
 registerSchema(f);
 
