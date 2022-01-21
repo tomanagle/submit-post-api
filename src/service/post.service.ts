@@ -15,9 +15,14 @@ export async function findPendingPosts() {
 const POSTS_PER_PAGE = 50;
 
 export async function findPosts({ page = 1 }) {
-  const skip = page - 1 * POSTS_PER_PAGE;
+  const skip = (page - 1) * POSTS_PER_PAGE;
 
-  return PostModel.find().limit(20).skip(skip).lean();
+  return PostModel.find()
+
+    .select("-__v -media")
+    .limit(POSTS_PER_PAGE)
+    .skip(skip < 0 ? 0 : skip)
+    .lean();
 }
 
 export async function updatePostStatus(postId: string, status: status) {

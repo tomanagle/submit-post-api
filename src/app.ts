@@ -11,7 +11,6 @@ const HOST = config.get<string>("host");
 
 const f: FastifyInstance = Fastify({
   bodyLimit: 12582912,
-  logger: true,
 });
 
 registerSchema(f);
