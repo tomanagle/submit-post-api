@@ -25,7 +25,7 @@ function registerSchema(f: FastifyInstance) {
         maximum: 280,
       },
     },
-    required: ["name", "image"],
+    required: ["name"],
     additionalProperties: false,
   });
 

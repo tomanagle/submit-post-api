@@ -6,6 +6,7 @@ import {
   createPost,
   findOneAndUpdatePost,
   findPendingPosts,
+  findPosts,
   updatePostStatus,
 } from "../service/post.service";
 import { createAirtableRecord } from "../utils/airtable";
@@ -38,10 +39,14 @@ export async function createPostHandler(
 }
 
 export async function getPostsHandler(
-  req: FastifyRequest,
+  req: FastifyRequest<{
+    Querystring: { page: number };
+  }>,
   reply: FastifyReply
 ) {
-  const posts = await findPendingPosts();
+  const page = req.query.page || 1;
+
+  const posts = await findPosts({ page });
 
   return posts;
 }
