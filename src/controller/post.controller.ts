@@ -11,6 +11,7 @@ import {
 } from "../service/post.service";
 import { createAirtableRecord } from "../utils/airtable";
 import log from "../utils/logger";
+import buildCaption from "../utils/buildCaption";
 
 export async function createPostHandler(
   req: FastifyRequest,
@@ -108,6 +109,10 @@ export async function processQue() {
 
   if (post) {
     log.info(post, "Submitting post");
-    createAirtableRecord(post);
+    createAirtableRecord({
+      ...post,
+      iGCaption: buildCaption(post, "instagram"),
+      twitterCaption: buildCaption(post, "twitter"),
+    });
   }
 }
