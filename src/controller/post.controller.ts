@@ -5,7 +5,6 @@ import { uploadImage } from "../service/media.service";
 import {
   createPost,
   findOneAndUpdatePost,
-  findPendingPosts,
   findPosts,
   updatePostStatus,
 } from "../service/post.service";

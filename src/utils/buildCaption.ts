@@ -22,7 +22,7 @@ function buildCaption(post: Post, medium: "instagram" | "twitter") {
   }
 
   if (post.twitterHandle && medium === "twitter") {
-    strings.push(`. Thank you ${post.twitterHandle} for sharing your story.`);
+    strings.push(`. Thank you @${post.twitterHandle} for sharing your story.`);
   }
 
   if (!post.instagramHandle && !post.twitterHandle) {
