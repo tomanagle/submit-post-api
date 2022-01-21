@@ -11,7 +11,6 @@ export async function createAirtableRecord({
   image,
   iGCaption,
   twitterCaption,
-  ...rest
 }: {
   name: string;
   image: string;
@@ -26,7 +25,6 @@ export async function createAirtableRecord({
           Image: image,
           IGCaption: iGCaption,
           TwitterCaption: twitterCaption,
-          ...rest,
         },
       },
     ],
