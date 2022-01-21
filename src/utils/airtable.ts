@@ -9,22 +9,31 @@ const base = new Airtable({
 export async function createAirtableRecord({
   name,
   image,
-  iGCaption,
+  instagramCaption,
   twitterCaption,
+  location,
+  twitterHandle,
+  instagramHandle,
 }: {
   name: string;
   image: string;
-  iGCaption: string;
+  instagramCaption: string;
   twitterCaption: string;
+  location: string;
+  twitterHandle: string;
+  instagramHandle: string;
 }) {
   base("IG Posts Table").create(
     [
       {
         fields: {
-          Name: name,
-          Image: image,
-          IGCaption: iGCaption,
-          TwitterCaption: twitterCaption,
+          name,
+          twitterCaption,
+          instagramCaption,
+          ...(image && { image }),
+          ...(location && { location }),
+          ...(twitterHandle && { twitterHandle }),
+          ...(instagramHandle && { instagramHandle }),
         },
       },
     ],

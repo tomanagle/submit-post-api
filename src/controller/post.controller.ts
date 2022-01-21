@@ -111,7 +111,7 @@ export async function processQue() {
     log.info(post, "Submitting post");
     createAirtableRecord({
       ...post,
-      iGCaption: buildCaption(post, "instagram"),
+      instagramCaption: buildCaption(post, "instagram"),
       twitterCaption: buildCaption(post, "twitter"),
     });
   }
