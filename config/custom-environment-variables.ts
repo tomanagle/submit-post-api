@@ -4,6 +4,7 @@ export default {
   accessTokenPrivateKey: "ACCESS_TOKEN_PRIVATE_KEY",
   airTableApiKey: "AIRTABLE_API_KEY",
   airTableBase: "AIRTABLE_BASE",
+  corsOrigin: "CORS_ORIGIN",
   cloudinary: {
     name: "CLOUDINARY_NAME",
     key: "CLOUDINARY_KEY",
