@@ -14,7 +14,7 @@ const f: FastifyInstance = Fastify({
   bodyLimit: 12582912,
 });
 
-f.register(cors, function (instance) {
+f.register(cors, function () {
   return (req, callback) => {
     const origin = req.headers.origin || "";
 
@@ -35,6 +35,17 @@ const start = async () => {
   try {
     await f.listen(PORT, HOST);
     await connectToDb();
+    log.info(
+      {
+        ...config,
+        accessTokenPrivateKey: "",
+        accessTokenPublicKey: "",
+        cloudinary: {},
+        dbUri: "",
+        airTableApiKey: "",
+      },
+      "Config"
+    );
     log.info(`Server started at http://${HOST}:${PORT}`);
   } catch (err) {
     log.info(err);
