@@ -31,7 +31,7 @@ function routes(f: FastifyInstance) {
 
   f.post("/api/posts/:postId/approve", {
     preHandler: async (req, res) => {
-      const isAuth = await verifyUser(req, res);
+      const isAuth = await verifyUser(req);
 
       if (!isAuth) {
         return res.code(403).send("Unauthorized");
@@ -45,7 +45,7 @@ function routes(f: FastifyInstance) {
 
   f.post("/api/posts/:postId/reject", {
     preHandler: async (req, res) => {
-      const isAuth = await verifyUser(req, res);
+      const isAuth = await verifyUser(req);
 
       if (!isAuth) {
         return res.code(403).send("Unauthorized");
