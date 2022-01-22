@@ -25,6 +25,7 @@ export async function findPosts({ page = 1 }) {
   })
     .select("-__v -media")
     .limit(POSTS_PER_PAGE)
+    .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .lean();
 }
