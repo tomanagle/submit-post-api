@@ -9,7 +9,10 @@ export async function createPost(input: Post) {
 }
 
 export async function findPendingPosts() {
-  return PostModel.find({ status: status.pending }).limit(20);
+  return PostModel.find({
+    status: status.pending,
+    image: { $ne: null },
+  }).select("-__v -media");
 }
 
 const POSTS_PER_PAGE = 50;
@@ -17,8 +20,9 @@ const POSTS_PER_PAGE = 50;
 export async function findPosts({ page = 1 }) {
   const skip = (page - 1) * POSTS_PER_PAGE;
 
-  return PostModel.find()
-
+  return PostModel.find({
+    status: { $ne: status.rejected },
+  })
     .select("-__v -media")
     .limit(POSTS_PER_PAGE)
     .skip(skip < 0 ? 0 : skip)

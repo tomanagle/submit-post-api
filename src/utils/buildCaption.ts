@@ -8,7 +8,7 @@ function buildCaption(post: Post, medium: "instagram" | "twitter") {
   const strings = [`${post.name}`];
 
   if (post.location) {
-    strings.push(` from ${post.location},`);
+    strings.push(` from ${post.location}`);
   }
 
   strings.push(

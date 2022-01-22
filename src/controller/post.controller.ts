@@ -5,12 +5,14 @@ import { uploadImage } from "../service/media.service";
 import {
   createPost,
   findOneAndUpdatePost,
+  findPendingPosts,
   findPosts,
   updatePostStatus,
 } from "../service/post.service";
 import { createAirtableRecord } from "../utils/airtable";
 import log from "../utils/logger";
 import buildCaption from "../utils/buildCaption";
+import { verifyUser } from "../utils/jwt";
 
 export async function createPostHandler(
   req: FastifyRequest,
@@ -44,6 +46,19 @@ export async function getPostsHandler(
   }>,
   reply: FastifyReply
 ) {
+  const token = req.headers.authorization;
+
+  if (token) {
+    const verified = await verifyUser(req);
+
+    if (verified) {
+      const posts = await findPendingPosts();
+      return posts;
+    }
+
+    return reply.code(403).send("Invalid token");
+  }
+
   const page = req.query.page || 1;
 
   const posts = await findPosts({ page });

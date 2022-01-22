@@ -19,6 +19,8 @@ const publicKey = Buffer.from(
 //   });
 // }
 
+// console.log(signJwt({ name: "dave" }));
+
 function verifyJwt<T>(token: string): T | null {
   try {
     const decoded = jwt.verify(token, publicKey) as T;
@@ -28,7 +30,7 @@ function verifyJwt<T>(token: string): T | null {
   }
 }
 
-export async function verifyUser(req: FastifyRequest, res: FastifyReply) {
+export async function verifyUser(req: FastifyRequest) {
   const authorization = req.headers.authorization;
 
   const decoded = authorization
