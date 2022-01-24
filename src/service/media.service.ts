@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import config from "config";
 import { nanoid } from "nanoid";
+import dayjs from "dayjs";
 import log from "../utils/logger";
 
 cloudinary.v2.config({
@@ -50,9 +51,7 @@ export async function uploadImage(file: any) {
     throw e;
   }
 
-  const date = new Date();
-
-  const base = `${date.getDay()}_${date.getMonth()}_${date.getFullYear()}`;
+  const base = dayjs().format("DD_MM_YYYY");
 
   const result = await cloudinary.v2.uploader.upload(
     filePath,
