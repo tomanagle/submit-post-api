@@ -27,10 +27,10 @@ export class Post {
   @prop()
   public media: any;
 
-  @prop({ type: String, trim: true, unique: true, sparse: true })
+  @prop({ type: String, trim: true })
   public instagramHandle: string;
 
-  @prop({ type: String, trim: true, unique: true, sparse: true })
+  @prop({ type: String, trim: true })
   public twitterHandle: string;
 
   @prop()
