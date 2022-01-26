@@ -25,7 +25,7 @@ function buildCaption(post: Post, medium: "instagram" | "twitter") {
     strings.push(`. Thank you for sharing your story.`);
   }
 
-  if (post.caption) {
+  if (post.caption && medium === "instagram") {
     strings.push(` Here is what ${post.name} has to say: ${post.caption}`);
   }
 
