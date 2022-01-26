@@ -46,7 +46,7 @@ export async function createPostHandler(
 
 export async function getPostsHandler(
   req: FastifyRequest<{
-    Querystring: { page: number };
+    Querystring: { page: string };
   }>,
   reply: FastifyReply
 ) {
@@ -63,7 +63,7 @@ export async function getPostsHandler(
     return reply.code(403).send("Invalid token");
   }
 
-  const page = req.query.page || 1;
+  const page = parseInt(req.query.page || "1", 10) || 1;
 
   const posts = await findPosts({ page });
 
@@ -71,7 +71,13 @@ export async function getPostsHandler(
 }
 
 export async function getPostsPreview() {
-  const posts = await findPosts({ limit: 4 });
+  const posts = await findPosts({
+    limit: 4,
+    query: {
+      status: { $ne: status.rejected },
+      image: { $ne: null },
+    },
+  });
 
   return posts;
 }

@@ -17,14 +17,22 @@ export async function findPendingPosts() {
 
 const POSTS_PER_PAGE = 50;
 
-export async function findPosts({ page = 1, limit = POSTS_PER_PAGE }) {
+export async function findPosts({
+  page = 1,
+  limit = POSTS_PER_PAGE,
+  query = {
+    status: { $ne: status.rejected },
+  },
+}: {
+  page?: number;
+  limit?: number;
+  query?: FilterQuery<Post>;
+}) {
   const skip = (page - 1) * POSTS_PER_PAGE;
 
-  return PostModel.find({
-    status: { $ne: status.rejected },
-  })
+  return PostModel.find(query)
     .select("-__v -media")
-    .limit(POSTS_PER_PAGE)
+    .limit(limit)
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)
     .lean();
