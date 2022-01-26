@@ -1,10 +1,6 @@
 import { Post } from "../model/post.model";
 
 function buildCaption(post: Post, medium: "instagram" | "twitter") {
-  if (post.caption) {
-    return post.caption;
-  }
-
   const strings = [`${post.name}`];
 
   if (post.location) {

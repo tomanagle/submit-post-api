@@ -127,10 +127,25 @@ export async function processQue() {
 
   if (post) {
     log.info(post, "Submitting post");
+
+    console.log("post.caption", post.caption);
+
+    const instagramCaption = post.caption
+      ? `${buildCaption(post, "instagram")} 
+
+      ${post.caption}`
+      : buildCaption(post, "instagram");
+
+    const twitterCaption = post.caption
+      ? `${buildCaption(post, "twitter")} 
+
+      ${post.caption}`
+      : buildCaption(post, "twitter");
+
     createAirtableRecord({
       ...post,
-      instagramCaption: buildCaption(post, "instagram"),
-      twitterCaption: buildCaption(post, "twitter"),
+      instagramCaption,
+      twitterCaption,
     });
   }
 }
