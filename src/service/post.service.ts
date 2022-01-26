@@ -17,7 +17,7 @@ export async function findPendingPosts() {
 
 const POSTS_PER_PAGE = 50;
 
-export async function findPosts({ page = 1 }) {
+export async function findPosts({ page = 1, limit = POSTS_PER_PAGE }) {
   const skip = (page - 1) * POSTS_PER_PAGE;
 
   return PostModel.find({

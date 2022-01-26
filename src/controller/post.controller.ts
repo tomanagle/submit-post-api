@@ -70,6 +70,12 @@ export async function getPostsHandler(
   return posts;
 }
 
+export async function getPostsPreview() {
+  const posts = await findPosts({ limit: 4 });
+
+  return posts;
+}
+
 export async function approvePostHandler(
   request: FastifyRequest<{
     Params: {

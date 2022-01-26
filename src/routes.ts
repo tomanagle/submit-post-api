@@ -5,6 +5,7 @@ import {
   approvePostHandler,
   createPostHandler,
   getPostsHandler,
+  getPostsPreview,
   processQue,
   rejectPostHandler,
 } from "./controller/post.controller";
@@ -31,6 +32,8 @@ function routes(f: FastifyInstance) {
   f.get("/api/posts", {
     handler: getPostsHandler,
   });
+
+  f.get("/api/posts/preview", getPostsPreview);
 
   f.post("/api/posts/:postId/approve", {
     preHandler: async (req, res) => {
