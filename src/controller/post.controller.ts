@@ -128,8 +128,6 @@ export async function processQue() {
   if (post) {
     log.info(post, "Submitting post");
 
-    console.log("post.caption", post.caption);
-
     const instagramCaption = buildCaption(post, "instagram");
 
     const twitterCaption = buildCaption(post, "twitter");
