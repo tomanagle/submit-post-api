@@ -25,6 +25,10 @@ function buildCaption(post: Post, medium: "instagram" | "twitter") {
     strings.push(`. Thank you for sharing your story.`);
   }
 
+  if (post.caption) {
+    strings.push(` Here is what ${post.name} has to say: ${post.caption}`);
+  }
+
   strings.push(" #safeandvaxxed");
 
   return strings.join("");
