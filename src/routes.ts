@@ -1,4 +1,5 @@
 import { FastifyInstance } from "fastify";
+import { uploadMediaHandler } from "./controller/media.controller";
 
 import {
   approvePostHandler,
@@ -17,6 +18,8 @@ function routes(f: FastifyInstance) {
       return { status: "ok" };
     },
   });
+
+  f.post("/api/m", uploadMediaHandler);
 
   f.post("/api/posts", {
     handler: createPostHandler,

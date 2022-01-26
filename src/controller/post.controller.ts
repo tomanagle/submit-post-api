@@ -1,7 +1,11 @@
 import { pick } from "lodash";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { status } from "../model/post.model";
-import { uploadImage } from "../service/media.service";
+import {
+  buildImageUrl,
+  findMediaById,
+  uploadImage,
+} from "../service/media.service";
 import {
   createPost,
   findOneAndUpdatePost,
@@ -18,26 +22,26 @@ export async function createPostHandler(
   req: FastifyRequest,
   reply: FastifyReply
 ) {
-  const { image: imageBase64, ...body } = req.body as {
+  const { image: imageId, ...body } = req.body as {
     image: string;
   };
 
+  const media = imageId ? await findMediaById(imageId) : null;
+
+  const image = media ? buildImageUrl(media) : null;
+
   // @ts-ignore
-  const post = await createPost(body);
+  const post = await createPost({
+    ...body,
+    ...(image && { image }),
+    ...(media && { media }),
+  });
 
   if (!post) {
     return reply.code(401).send("Nope");
   }
 
   reply.code(200).send(pick(post.toJSON(), ["_id"]));
-
-  const image = await uploadImage(imageBase64);
-
-  if (image) {
-    await post.updateOne(image);
-  }
-
-  await post.save();
 }
 
 export async function getPostsHandler(
