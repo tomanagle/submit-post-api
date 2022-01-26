@@ -131,15 +131,15 @@ export async function processQue() {
     console.log("post.caption", post.caption);
 
     const instagramCaption = post.caption
-      ? `${buildCaption(post, "instagram")} 
-
-      ${post.caption}`
+      ? `${buildCaption(post, "instagram")} Here is what ${
+          post.name
+        } had to say: ${post.caption}`
       : buildCaption(post, "instagram");
 
     const twitterCaption = post.caption
-      ? `${buildCaption(post, "twitter")} 
-
-      ${post.caption}`
+      ? `${buildCaption(post, "twitter")} Here is what ${
+          post.name
+        } had to say: ${post.caption}`
       : buildCaption(post, "twitter");
 
     createAirtableRecord({
