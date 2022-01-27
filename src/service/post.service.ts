@@ -23,15 +23,17 @@ export async function findPosts({
   query = {
     status: { $ne: status.rejected },
   },
+  select = "-__v -media",
 }: {
   page?: number;
   limit?: number;
   query?: FilterQuery<Post>;
+  select?: string;
 }) {
   const skip = (page - 1) * POSTS_PER_PAGE;
 
   return PostModel.find(query)
-    .select("-__v -media")
+    .select(select)
     .limit(limit)
     .sort({ createdAt: -1 })
     .skip(skip < 0 ? 0 : skip)

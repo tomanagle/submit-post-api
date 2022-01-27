@@ -17,16 +17,16 @@ export function getFrame() {
   return `frame_${randomIntFromInterval(1, 25)}`;
 }
 
-export function buildImageUrl(media: Media) {
+export function buildImageUrl(media: Media, w = "1500", h = "1500") {
   const { frame, version, original_filename, base } = media;
 
   return `https://res.cloudinary.com/${config.get(
     "cloudinary.name"
-  )}/image/upload/c_thumb,g_faces,w_1500,h_1500/c_scale,g_south_west,l_frames:${frame},w_1500,x_0,y_0/v${version}/posts/${base}/${original_filename}.jpeg`;
+  )}/image/upload/c_thumb,g_faces,w_${w},h_${h}/c_scale,g_south_west,l_frames:${frame},w_${w},x_0,y_0/v${version}/posts/${base}/${original_filename}.jpeg`;
 }
 
-export function getBasePath(basePrefix = "") {
-  return `${basePrefix}${dayjs().format("DD_MM_YYYY")}`;
+export function getBasePath(date = new Date()) {
+  return `${dayjs(date).format("DD_MM_YYYY")}`;
 }
 
 function clearFolder(dir: string) {

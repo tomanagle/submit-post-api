@@ -1,9 +1,11 @@
 import { pick } from "lodash";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { status } from "../model/post.model";
+import { Post, status } from "../model/post.model";
 import {
   buildImageUrl,
   findMediaById,
+  getBasePath,
+  getFrame,
   uploadImage,
 } from "../service/media.service";
 import {
@@ -77,9 +79,32 @@ export async function getPostsPreview() {
       status: { $ne: status.rejected },
       image: { $ne: null },
     },
+    select: "-__v -media.api_key -media.__v",
   });
 
-  return posts;
+  return posts.map((post: Post) => {
+    return {
+      ...pick(post, [
+        "_id",
+        "name",
+        "instagramHandle",
+        "twitterHandle",
+        "createdAt",
+      ]),
+      caption: post.caption || buildCaption(post, "web"),
+      image: buildImageUrl(
+        {
+          ...post.media,
+
+          frame: post.media.frame || getFrame(),
+          // @ts-ignore
+          base: getBasePath(new Date(post.createdAt)),
+        },
+        "500",
+        "500"
+      ),
+    };
+  });
 }
 
 export async function approvePostHandler(
