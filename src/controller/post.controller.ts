@@ -6,7 +6,6 @@ import {
   findMediaById,
   getBasePath,
   getFrame,
-  uploadImage,
 } from "../service/media.service";
 import {
   createPost,
@@ -81,6 +80,19 @@ export async function getPostsHandler(
   });
   try {
     return posts.map((post: Post) => {
+      const image = buildImageUrl(
+        {
+          ...post.media,
+
+          frame: post?.media?.frame || getFrame(),
+          // @ts-ignore
+          base: getBasePath(new Date(post.createdAt)),
+        },
+        "500",
+        "500",
+        post.image
+      );
+
       return {
         ...pick(post, [
           "_id",
@@ -91,16 +103,7 @@ export async function getPostsHandler(
           "createdAt",
         ]),
         caption: post.caption || buildCaption(post, "web"),
-        image: buildImageUrl(
-          {
-            ...post.media,
-            frame: post?.media?.frame || getFrame(),
-            // @ts-ignore
-            base: getBasePath(new Date(post.createdAt)),
-          },
-          "500",
-          "500"
-        ),
+        image,
       };
     });
   } catch (e) {

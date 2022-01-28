@@ -17,8 +17,18 @@ export function getFrame() {
   return `frame_${randomIntFromInterval(1, 25)}`;
 }
 
-export function buildImageUrl(media: Media, w = "1500", h = "1500") {
+export function buildImageUrl(
+  media: Media,
+  w = "1500",
+  h = "1500",
+  backup: string
+) {
+  console.log({ media });
   const { frame, version, original_filename, base } = media;
+
+  if (!version || !original_filename || !base || !frame) {
+    return backup;
+  }
 
   return `https://res.cloudinary.com/${config.get(
     "cloudinary.name"
