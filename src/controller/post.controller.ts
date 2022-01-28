@@ -80,18 +80,20 @@ export async function getPostsHandler(
   });
   try {
     return posts.map((post: Post) => {
-      const image = buildImageUrl(
-        {
-          ...post.media,
-
-          frame: post?.media?.frame || getFrame(),
-          // @ts-ignore
-          base: getBasePath(new Date(post.createdAt)),
-        },
-        "500",
-        "500",
-        post.image
-      );
+      const image =
+        post.media || post.image
+          ? buildImageUrl(
+              {
+                ...post.media,
+                frame: post?.media?.frame || getFrame(),
+                // @ts-ignore
+                base: getBasePath(new Date(post.createdAt)),
+              },
+              "500",
+              "500",
+              post.image
+            )
+          : null;
 
       return {
         ...pick(post, [
