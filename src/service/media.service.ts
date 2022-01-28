@@ -23,7 +23,6 @@ export function buildImageUrl(
   h = "1500",
   backup: string
 ) {
-  console.log({ media });
   const { frame, version, original_filename, base } = media;
 
   if (!version || !original_filename || !base || !frame) {
