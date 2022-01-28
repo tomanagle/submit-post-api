@@ -89,6 +89,7 @@ export async function getPostsPreview() {
         "name",
         "instagramHandle",
         "twitterHandle",
+        "country",
         "createdAt",
       ]),
       caption: post.caption || buildCaption(post, "web"),
