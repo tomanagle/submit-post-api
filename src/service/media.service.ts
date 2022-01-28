@@ -21,11 +21,11 @@ export function buildImageUrl(
   media: Media,
   w = "1500",
   h = "1500",
-  backup: string
+  backup?: string
 ) {
   const { frame, version, original_filename, base } = media;
 
-  if (!version || !original_filename || !base || !frame) {
+  if ((!version || !original_filename || !base || !frame) && backup) {
     return backup;
   }
 
