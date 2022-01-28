@@ -83,13 +83,15 @@ export async function getPostsPreview() {
   });
 
   return posts.map((post: Post) => {
+    console.log(post);
+
     return {
       ...pick(post, [
         "_id",
         "name",
         "instagramHandle",
         "twitterHandle",
-        "country",
+        "location",
         "createdAt",
       ]),
       caption: post.caption || buildCaption(post, "web"),
