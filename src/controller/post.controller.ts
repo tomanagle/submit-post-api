@@ -67,9 +67,41 @@ export async function getPostsHandler(
 
   const page = parseInt(req.query.page || "1", 10) || 1;
 
-  const posts = await findPosts({ page });
-
-  return posts;
+  const posts = await findPosts({
+    page,
+    select: "-__v -media.api_key -media.__v",
+    query: {
+      status: { $ne: status.rejected },
+    },
+  });
+  try {
+    return posts.map((post: Post) => {
+      return {
+        ...pick(post, [
+          "_id",
+          "name",
+          "instagramHandle",
+          "twitterHandle",
+          "location",
+          "createdAt",
+        ]),
+        caption: post.caption || buildCaption(post, "web"),
+        image: buildImageUrl(
+          {
+            ...post.media,
+            frame: post?.media?.frame || getFrame(),
+            // @ts-ignore
+            base: getBasePath(new Date(post.createdAt)),
+          },
+          "500",
+          "500"
+        ),
+      };
+    });
+  } catch (e) {
+    log.error(e);
+    return [];
+  }
 }
 
 export async function getPostsPreview() {
@@ -83,8 +115,6 @@ export async function getPostsPreview() {
   });
 
   return posts.map((post: Post) => {
-    console.log(post);
-
     return {
       ...pick(post, [
         "_id",
