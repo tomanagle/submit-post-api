@@ -15,7 +15,7 @@ export async function findPendingPosts() {
   }).select("-__v -media");
 }
 
-const POSTS_PER_PAGE = 50;
+export const POSTS_PER_PAGE = 50;
 
 export async function findPosts({
   page = 1,

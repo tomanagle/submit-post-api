@@ -13,6 +13,7 @@ import {
   findOneAndUpdatePost,
   findPendingPosts,
   findPosts,
+  POSTS_PER_PAGE,
   updatePostStatus,
 } from "../service/post.service";
 import { createAirtableRecord } from "../utils/airtable";
@@ -48,7 +49,7 @@ export async function createPostHandler(
 
 export async function getPostsHandler(
   req: FastifyRequest<{
-    Querystring: { page: string };
+    Querystring: { page: string; limit: string };
   }>,
   reply: FastifyReply
 ) {
@@ -67,8 +68,12 @@ export async function getPostsHandler(
 
   const page = parseInt(req.query.page || "1", 10) || 1;
 
+  const limit =
+    parseInt(req.query.limit || String(POSTS_PER_PAGE), 10) || POSTS_PER_PAGE;
+
   const posts = await findPosts({
     page,
+    limit,
     select: "-__v -media.api_key -media.__v",
     query: {
       status: { $ne: status.rejected },
