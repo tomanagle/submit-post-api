@@ -142,7 +142,8 @@ export async function getPostsPreview() {
           base: getBasePath(new Date(post.createdAt)),
         },
         "500",
-        "500"
+        "500",
+        post.image
       ),
     };
   });
