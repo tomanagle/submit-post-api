@@ -87,7 +87,8 @@ export async function getPostsHandler(
                 ...post.media,
                 frame: post?.media?.frame || getFrame(),
                 // @ts-ignore
-                base: post.media.base || getBasePath(new Date(post.createdAt)),
+                base:
+                  post?.media?.base || getBasePath(new Date(post.createdAt)),
               },
               "500",
               "500",
